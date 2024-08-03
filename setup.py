@@ -7,8 +7,8 @@ with open("./ReadME.md", "r") as f:
 
 setup(
 
-        name="OCP",
-        version="0.0.10",
+        name="pycosmed",
+        version="0.0.20",
         description="an OCP interface to send commands and recieve using Omnia control protocol",
         package_dir={"":"."},
         packages=find_packages(where="."),
@@ -34,7 +34,8 @@ setup(
             'Topic :: Scientific/Engineering :: Bio-Informatics',
             'Topic :: Scientific/Engineering :: Visualization'
         ],
-        install_requires=["xmltodict >= 0.13.0","dicttoxml2 >= 2.1.0"],
+        install_requires=["xmltodict >= 0.13.0",
+                          "dicttoxml2 >= 2.1.0"],
 
         extras_require={
             "dev":["twine"]

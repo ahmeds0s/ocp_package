@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
-Name: OCP
-Version: 0.0.11
+Name: pycosmed
+Version: 0.0.20
 Summary: an OCP interface to send commands and recieve using Omnia control protocol
 Home-page: https://github.com/ahmeds0s/ocp_package
 Author: Ahmed M. Hesham
