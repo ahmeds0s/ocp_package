@@ -1,0 +1,67 @@
+Metadata-Version: 2.1
+Name: OCP
+Version: 0.0.10
+Summary: an OCP interface to send commands and recieve using Omnia control protocol
+Home-page: https://github.com/ahmeds0s/ocp_package
+Author: Ahmed M. Hesham
+Author-email: ah.hesham3333@gmail.com
+License: MIT
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Manufacturing
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator
+Classifier: Topic :: System :: Hardware :: Hardware Drivers
+Classifier: Topic :: System :: Monitoring
+Classifier: Intended Audience :: Healthcare Industry
+Classifier: Topic :: Text Processing :: Markup :: XML
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: xmltodict>=0.13.0
+Requires-Dist: dicttoxml2>=2.1.0
+Provides-Extra: dev
+Requires-Dist: twine; extra == "dev"
+
+to get started with OCP using python follow the following steps:- 
+
+
+1. normally install COSMED Omnia.
+2. run the regedit.reg file provided to configure the OCP.
+3. then normally start COMSED OMNIA.
+4. then you can use the python module ocp.py to send commands to the software.
+
+
+# you can just import OCP using 
+ 
+from OCP import OCP
+
+commander
+# first create a client using
+ 
+client = Client(host="127.0.0.1", port=44444)
+
+
+# then create a  object using
+com = commander()
+
+# get the command to be sent
+command = com.login() # in that case provide the username and password
+
+
+# then give send the command using 
+response = client.send_xml(command) # you would recieve a python dictionary with the response with same structure as the result 
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+LICENSE.txt
+setup.py
+./src/OCP.egg-info/PKG-INFO
+./src/OCP.egg-info/SOURCES.txt
+./src/OCP.egg-info/dependency_links.txt
+./src/OCP.egg-info/requires.txt
+./src/OCP.egg-info/top_level.txt
+src/OCP.egg-info/PKG-INFO
+src/OCP.egg-info/SOURCES.txt
+src/OCP.egg-info/dependency_links.txt
+src/OCP.egg-info/requires.txt
+src/OCP.egg-info/top_level.txt

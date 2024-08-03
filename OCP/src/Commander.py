@@ -1,16 +1,8 @@
-import sys
-import xml.etree.ElementTree as ET
-import socket                    # used for tcp communication
-import xmltodict                 # used to convert xml recieved from omnia to dict
-# used to convert python dictionary to xml to be sent to omnia server
 from dicttoxml2 import dicttoxml
-# to create delay between different commands to allow the command to be executed properly
-from time import sleep
 from functools import wraps
 
 #  class commander to create commands in xml format
 # then send it via the client
-
 
 class Commander:
     """ 
@@ -54,6 +46,7 @@ class Commander:
             xml = method(self, *args, **kwargs)
             return self.send_xml(xml)
         return func
+    
     def _create_main_sys_body(self, child):
         """Create the main XML structure for system messages"""
         body = self.sys_body.copy()
@@ -71,7 +64,7 @@ class Commander:
         body = self.RT_body.copy()
         body[self.root_node]["RealTime"] = child
         return body
-    @_send_and_recieve
+    
     def CreateCommand(self, command: dict):
         """Creates a command given a dictionary"""
         return dicttoxml(command, root=False, attr_type=False)
@@ -297,91 +290,3 @@ class Commander:
     @_send_and_recieve
     def testEvent(self, event_type):
         return self.to_xml(self._create_main_RT_body({"TestEvent": {"EventType": event_type}}))
-    
-
-
-
-# to carry out the tcp connection and send and recieve data
-class Client(object):
-    def __init__(self, host, port):
-        self.host = host
-        self.port = port
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.settimeout(5)
-
-    def connect(self):
-        self.socket.connect((self.host, self.port))
-
-    def disconnect(self):
-        self.socket.close()
-
-    def send_xml(self, xml_data):
-        self.socket.sendall(xml_data)
-        response = self.receive_response()
-        return response
-
-    @staticmethod
-    def _receive_as_dict(recieve):
-        """a decorator that return a list of messages"""
-        @wraps(recieve)
-        def func(self):
-            response = recieve(self).split(
-                '<?xml version="1.0" encoding="utf-8" standalone="no"?>')
-            if response[0] == '':
-                response.remove('')
-            if len(response) == 0 :
-                return []
-            elif response[0] == 'TimeOUT':
-                return []
-
-            messages = []
-            for message in response:
-                try:
-                    messages.append(xmltodict.parse(message))
-                except Exception as E:
-                    print("recieved:", response, "end")
-                    print(E)
-                    print(response)
-            return messages
-        return func
-
-    @_receive_as_dict
-    def receive_response(self):
-        """Receives a response with one or more messsages"""
-        response = b""
-        try:
-            while True:
-                part = self.socket.recv(1024)
-                response += part
-
-                if len(part) < 1024:
-                    break
-
-        except TimeoutError:
-            return "TimeOUT"
-        return response.decode("utf-8")
-
-
-class OCP(Commander, Client):
-    """Creates an OCP object that could be used to send commands and recieve response"""
-    # Merge Commander and Client Class
-    def __init__(self, root_node="OmniaXB", ip_address="127.0.0.1", port=44444):
-        Commander.__init__(self, root_node=root_node)
-        Client.__init__(self, host=ip_address, port=port)
-
-
-
-if __name__ == "__main__":
-    try:
-        c = OCP(ip_address="127.0.0.1", port=44444, root_node="OmniaXB")
-        c.connect()
-        c.login("admin",'hcmlab')
-        sleep(1)
-        print(c.receive_response())
-        sleep(5)
-        print(c.enableRealTimeInfo())
-        print(c.showOCPButton())
-        for _ in range(100):
-            print(c.receive_response())
-    except:
-        c.disconnect()
