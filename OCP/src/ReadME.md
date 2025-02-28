@@ -1,5 +1,5 @@
 ## About
-This package is create to interface with COSMED Omnia *(created by ©1996-2024 [COSMED](https://www.cosmed.com/en/) srl)* using OCP (Omnia control protocol) it Could be used to send any command from the OCP and get the result as a python dictionary by first creating the command as an xml send it and receive the response and process it to get a python dictionary to all easy Integration with python.
+This package is create to interface with COSMED Omnia *(created by ©1996-2024 [COSMED](https://www.cosmed.com/en/) srl)* using OCP (Omnia control protocol) it Could be used to send any command from the OCP and get the result as a python dictionary by first creating the command as an xml send it and receive the response and process it to get a python dictionary to allow easy Integration with python.
 
 
 ## to get started with OCP using python follow the following steps:-
